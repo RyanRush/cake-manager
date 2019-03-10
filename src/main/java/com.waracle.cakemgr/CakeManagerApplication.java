@@ -3,25 +3,29 @@ package com.waracle.cakemgr;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.waracle.cakemgr.entity.CakeEntity;
+import com.waracle.cakemgr.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.List;
 
-@WebServlet("/cakes")
-public class CakeServlet extends HttpServlet {
+@SpringBootApplication
+public class CakeManagerApplication {
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
+    public static void main(String[] args){
+        SpringApplication.run(CakeManagerApplication.class, args);
 
+        initialisation();
+    }
+
+    private static void initialisation() {
         System.out.println("init started");
 
 
@@ -75,32 +79,13 @@ public class CakeServlet extends HttpServlet {
             }
 
         } catch (Exception ex) {
-            throw new ServletException(ex);
+            try {
+                throw new ServletException(ex);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
         }
 
         System.out.println("init finished");
     }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<CakeEntity> list = session.createCriteria(CakeEntity.class).list();
-
-        resp.getWriter().println("[");
-
-        for (CakeEntity entity : list) {
-            resp.getWriter().println("\t{");
-
-            resp.getWriter().println("\t\t\"title\" : " + entity.getTitle() + ", ");
-            resp.getWriter().println("\t\t\"desc\" : " + entity.getDescription() + ",");
-            resp.getWriter().println("\t\t\"image\" : " + entity.getImage());
-
-            resp.getWriter().println("\t}");
-        }
-
-        resp.getWriter().println("]");
-
-    }
-
 }

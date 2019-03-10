@@ -1,4 +1,4 @@
-package com.waracle.cakemgr;
+package com.waracle.cakemgr.entity;
 
 import java.io.Serializable;
 
