@@ -1,22 +1,30 @@
 package com.waracle.cakemgr.resource;
 
-import com.waracle.cakemgr.entity.CakeEntity;
-import com.waracle.cakemgr.util.HibernateUtil;
-import org.hibernate.Session;
+import com.waracle.cakemgr.entity.Cake;
+import com.waracle.cakemgr.repository.CakeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 public class CakeController {
 
-    @GetMapping("/cakes")
-    public List<CakeEntity> getCakes() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<CakeEntity> list = session.createCriteria(CakeEntity.class).list();
+    private final CakeRepository cakeRepository;
 
-        return list;
+    @Autowired
+    public CakeController(CakeRepository cakeRepository) {
+        this.cakeRepository = cakeRepository;
+    }
+
+    @GetMapping("/cakes")
+    public List<Cake> getCakes() {
+        return StreamSupport
+                .stream(cakeRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
 }
