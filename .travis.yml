@@ -16,6 +16,6 @@ before_deploy:
 
 deploy:
   provider: script
-  script: docker push ryanrush/cake.manager.demo
+  script: docker push ryanrush/cake.manager.demo:cake-manager-demo
   on:
     branch: master
