@@ -1,6 +1,21 @@
+sudo: required
 language: java
+jdk: oraclejdk8
+
+services:
+  - docker
 
 before_install:
  - chmod +x gradlew
 
-jdk: oraclejdk8
+script:
+ - docker build -t cake-manager-demo .
+
+before_deploy:
+  - echo "$ DOCKER_PASSWORD" | docker login -u "$ DOCKER_USERNAME" --password-stdin
+
+deploy:
+  provider: script
+  script: docker push ryanrush/cake.manager.demo
+  on:
+    branch: master
