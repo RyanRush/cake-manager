@@ -8,10 +8,12 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
+import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.H2;
 import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.HSQL;
 
 @Configuration
@@ -30,7 +32,7 @@ public class DatasourceConfiguration extends JdbcConfiguration {
     @Bean
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
-                .setType(HSQL)
+                .setType(H2)
                 .addScript("classpath:schema.sql")
                 .addScript("classpath:seed-data.sql")
                 .build();
