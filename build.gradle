@@ -30,10 +30,42 @@ repositories {
      maven { url "http://repo.maven.apache.org/maven2" }
 }
 
+sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.output + configurations.testCompile
+        runtimeClasspath += output + compileClasspath + configurations.testRuntime
+    }
+}
+
+idea {
+    module {
+        testSourceDirs += sourceSets.integrationTest.java.srcDirs
+        scopes.TEST.plus += [ configurations.integrationTestCompile ]
+    }
+}
+
+task integrationTest(type: Test) {
+    group = 'verification'
+    description = 'Runs the integration tests.'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    outputs.upToDateWhen { false }
+    mustRunAfter tasks.test
+}
+
+check.dependsOn integrationTest
+
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.data:spring-data-jdbc'
-    runtimeOnly 'org.hsqldb:hsqldb'
+    runtime 'com.h2database:h2'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'com.jayway.restassured:rest-assured:2.9.0'
+
+    integrationTestCompile sourceSets.main.output
+    integrationTestCompile sourceSets.test.output
+    integrationTestCompile configurations.compile
+    integrationTestCompile configurations.testCompile
+    integrationTestRuntime configurations.runtime
+    integrationTestRuntime configurations.testRuntime
 }
