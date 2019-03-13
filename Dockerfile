@@ -14,4 +14,7 @@ ARG JAR_FILE=build/libs/cake-manager-1.0-SNAPSHOT.jar
 ADD ${JAR_FILE} cake-manager.jar
 
 # https://docs.docker.com/engine/reference/builder/#entrypoint
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","cake-manager.jar"]
+ENTRYPOINT ["java"]
+
+# https://docs.docker.com/engine/reference/builder/#cmd
+CMD ["-Djava.security.egd=file:/dev/./urandom","-jar","cake-manager.jar"]
