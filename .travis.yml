@@ -6,15 +6,15 @@ services:
   - docker
 
 before_install:
- - chmod +x gradlew
-
-before_deploy:
+  - chmod +x gradlew
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+script:
+  -  docker build -t ryanrush/cake-manager-api-docker-repo .
 
 deploy:
   provider: script
   script:
-    - docker build -t ryan.rush/cake.manager.demo:cake-api-demo .
-    - docker push ryan.rush/cake.manager.demo:cake-api-demo
+    docker push ryanrush/cake-manager-api-docker-repo
   on:
     branch: master
