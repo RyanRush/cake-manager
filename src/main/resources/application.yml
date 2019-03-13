@@ -3,3 +3,5 @@ spring.h2.console:
   path: /h2-console
   settings:
     web-allow-others: true
+
+server.port: ${PORT:5000}
