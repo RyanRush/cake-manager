@@ -7,14 +7,18 @@ services:
 
 before_install:
   - chmod +x gradlew
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
 
 script:
   -  docker build -t ryanrush/cake-manager-api-docker-repo .
+  -  docker tag ryanrush/cake-manager-api-docker-repo registry.heroku.com/$HEROKU_APP_NAME/web
 
 deploy:
   provider: script
   script:
     docker push ryanrush/cake-manager-api-docker-repo
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
   on:
     branch: master
