@@ -18,7 +18,7 @@ script:
 deploy:
   provider: script
   script:
-    docker push ryanrush/cake-manager-api-docker-repo
+    docker push ryanrush/cake-manager-api-docker-repo;
     docker push registry.heroku.com/$HEROKU_APP_NAME/web;
   on:
     branch: master
