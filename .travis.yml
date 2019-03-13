@@ -20,6 +20,7 @@ deploy:
   script:
     docker push ryanrush/cake-manager-api-docker-repo;
     docker push registry.heroku.com/$HEROKU_APP_NAME/web;
-    heroku container: web release --app $HEROKU_APP_NAME
+    heroku container:web release --app $HEROKU_APP_NAME
   on:
     branch: master
+
