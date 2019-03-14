@@ -36,7 +36,7 @@ public class CakeControllerTest {
     public void getCakes_willReturnACollectionOfCakesInJsonFormat() throws Exception {
         Mockito.when(cakeRepository.findAll()).thenReturn(testIterableData());
 
-        MvcResult mockDownloadResult = mockMvc.perform(MockMvcRequestBuilders.get("/"))
+        MvcResult mockDownloadResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/"))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
 
         assertEquals(200, mockDownloadResult.getResponse().getStatus());
@@ -50,7 +50,7 @@ public class CakeControllerTest {
     public void downloadCakeJsonFile_willDownloadCakesInSystemAsJsonFile() throws Exception {
         Mockito.when(cakeRepository.findAll()).thenReturn(testIterableData());
 
-        MvcResult mockDownloadResult = mockMvc.perform(MockMvcRequestBuilders.get("/cakes"))
+        MvcResult mockDownloadResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/cakes"))
                 .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
 
         assertEquals("application/json", mockDownloadResult.getResponse().getContentType());

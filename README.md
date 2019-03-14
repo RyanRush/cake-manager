@@ -32,13 +32,22 @@ The application is currently running here: https://cake-manager-demo.herokuapp.c
 2. The api will be accessible from: **http://localhost:8080/**
 
 ## How to use?
+#### REST API
 
 1. Fetch all cake resources:
-    - curl https://cake-manager-demo.herokuapp.com/
+    - curl https://cake-manager-demo.herokuapp.com/api/
 2. Create new cake resource:
-    - curl -X POST -H "Content-Type: application/json" -d '{"title":"Cheesecake","description":"description 21","image":"image 21"}' https://cake-manager-demo.herokuapp.com/cakes
+    - curl -X POST -H "Content-Type: application/json" -d '{"title":"Cheesecake","description":"description 21","image":"image 21"}' https://cake-manager-demo.herokuapp.com/api/cakes
 3. Download cake resources as json file
-    - curl https://cake-manager-demo.herokuapp.com/cakes --output cakes.json
+    - curl https://cake-manager-demo.herokuapp.com/api/cakes --output cakes.json
+
+#### UI
+
+1. View cake resources:
+    - https://cake-manager-demo.herokuapp.com/
+2. Create new cake resource:
+    - https://cake-manager-demo.herokuapp.com/ 
+    - Click on 'Add Cake' link
 
 ## Useful links
 

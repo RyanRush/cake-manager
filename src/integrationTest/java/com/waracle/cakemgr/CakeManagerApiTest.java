@@ -26,7 +26,7 @@ public class CakeManagerApiTest {
     @Before
     public void setup() {
         RestAssured.port = port;
-        RestAssured.baseURI = "http://localhost";
+        RestAssured.baseURI = "http://localhost/api";
     }
 
     @Test
